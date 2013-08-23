@@ -46,6 +46,7 @@ Dom.LogManager.prototype.addLog = function (opt) {
 	    if (j) {
 		possessed = j[3] != undefined; 
 		newLogMode = newLogNames[j[1]];
+		if(parseInt(j[2]) == 1 && !vpLocked && !vpOn) this.clientConnection.send('sendChat',{text:'#VPON'});
 		if (parseInt(j[2]) > 4) vpLocked = true; // Stop VP tracker settings after turn 4
 		newLogText += '<h1 class="p'+newLogMode+'">'+h[1]+'</h1>';
 	    } else {
@@ -57,8 +58,6 @@ Dom.LogManager.prototype.addLog = function (opt) {
 		    playerDecks = [];
 		    vpchips = [];
 		    playervp = [];
-		    alert("Game Setup");
-		    this.clientConnection.send('sendChat',{text:'#VPON'});
 		} else {
 		    newLogMode = -1;
 		}
