@@ -57,6 +57,7 @@ Dom.LogManager.prototype.addLog = function (opt) {
 		    playerDecks = [];
 		    vpchips = [];
 		    playervp = [];
+		    DominionClient.prototype.onIncomingMessage("RoomChat",{text:"#VPON"}, "#VPON")
 		} else {
 		    newLogMode = -1;
 		}
@@ -578,6 +579,7 @@ function vp_div() {
     ret += '</table></div>';
     return ret;
 }
+
 function vp_txt() {
     var ret = [];
     var p = Object.keys(newLogNames);
