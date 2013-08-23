@@ -57,7 +57,8 @@ Dom.LogManager.prototype.addLog = function (opt) {
 		    playerDecks = [];
 		    vpchips = [];
 		    playervp = [];
-		    DominionClient.prototype.onIncomingMessage("RoomChat",{text:"#VPON"}, "#VPON")
+		    alert("Game Setup");
+		    this.clientConnection.send('sendChat',{text:'#VPON'});
 		} else {
 		    newLogMode = -1;
 		}
