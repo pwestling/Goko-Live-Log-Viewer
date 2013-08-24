@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     21
+// @version     23
 // ==/UserScript==
 var foo = function () {
 if (Dom.LogManager.prototype.old_addLog) {
@@ -112,7 +112,10 @@ function newLogRefresh() {
 	var t = goko_canvas.style.marginTop;
 	newLog.setAttribute("style", "position:absolute; overflow:auto; left:"+goko_w+"px; width:"+w+"px; margin-top:"+t+"; height:"+goko_h+"px; background-color: white; z-index: -1");
 	var logHtml = vp_div();
+	alert(logHtml);
+	alert(JSON.stringify(newLogNames));
 	for(var player in Object.keys(newLogNames)){
+		alert(player);
 		logHtml += deck_div(player);
 	}
 	newLog.innerHTML = logHtml+'<div id="newlogcontainer" style="overflow:auto;height:'+(goko_h-200)+'px;width:'+(w-10)+'px;padding:195px 5px 5px 5px">'+newLogText+"</div>";
@@ -587,12 +590,11 @@ var deckCompOn = true;
 
 function deck_div(player) {
     if (!deckCompOn) return '';
-	
+	alert("Deck div for "+player);
 	var playerNum = newLogNames[player]
 	var deck = playerDecks[playerNum]
 	var left = 200+150*playerNum;
-    var ret = '<div class="deck_div" style="position:absolute;left:'+left.toString()+' px;padding:2px;background-color:gray"><table>';
-	
+    var ret = '<div class="deck_div" style="position:absolute;padding:2px;background-color:gray"><table>';
 	for(card in deck){
 		ret += '<tr class="p'+playerNum+'"><td>'+card+ '</td><td>'+ deck[card] + '</td></tr>';
 	}
