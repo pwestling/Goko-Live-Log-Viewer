@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     18
+// @version     19
 // ==/UserScript==
 var foo = function () {
 if (Dom.LogManager.prototype.old_addLog) {
@@ -68,10 +68,6 @@ Dom.LogManager.prototype.addLog = function (opt) {
 		var h = opt.text.match(/^(.*) - (starting cards: .*)/);
 		if (h) {
 		    newLogNames[h[1]] = ++newLogPlayers;
-			if(h[1].indexOf('Porter') != 0){
-				porterPlayerName = h[1];
-				alert(porterPlayerName);
-			}
 		    playerDecks[newLogNames[h[1]]] = {};
 		    vpchips[newLogNames[h[1]]] = 0;
 		    updateDeck(newLogNames[h[1]], h[2]);
@@ -115,7 +111,11 @@ function newLogRefresh() {
 	var w = window.innerWidth - goko_w;
 	var t = goko_canvas.style.marginTop;
 	newLog.setAttribute("style", "position:absolute; overflow:auto; left:"+goko_w+"px; width:"+w+"px; margin-top:"+t+"; height:"+goko_h+"px; background-color: white; z-index: -1");
-	newLog.innerHTML = vp_div() + deck_div(porterPlayerName)+'<div id="newlogcontainer" style="overflow:auto;height:'+(goko_h-200)+'px;width:'+(w-10)+'px;padding:195px 5px 5px 5px">'+newLogText+"</div>";
+	var logHtml = vp_div();
+	for(var player in Object.keys(newLogPlayers)){
+		logHtml += deck_div(player);
+	}
+	newLog.innerHTML = logHtml+'<div id="newlogcontainer" style="overflow:auto;height:'+(goko_h-200)+'px;width:'+(w-10)+'px;padding:195px 5px 5px 5px">'+newLogText+"</div>";
 }
 window.addEventListener('resize', function() {
 	setTimeout(newLogRefresh,100);
@@ -587,11 +587,14 @@ var deckCompOn = true;
 
 function deck_div(player) {
     if (!deckCompOn) return '';
-    var ret = '<div style="position:absolute;padding:2px;background-color:gray"><table>';
+	
 	var playerNum = newLogNames[player]
 	var deck = playerDecks[playerNum]
+	var left = 200+150*playerNum;
+    var ret = '<div style="position:absolute;left:'+left.toString()+';padding:2px;background-color:gray"><table>';
+	
 	for(card in deck){
-		ret += '<tr class="p'+player+'"><td>'+card+ '</td><td>'+ deck[card] + '</td></tr>';
+		ret += '<tr class="p'+playerNum+'"><td>'+card+ '</td><td>'+ deck[card] + '</td></tr>';
 	}
     ret += '</table></div>';
     return ret;
