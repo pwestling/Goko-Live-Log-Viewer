@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     29
+// @version     30
 // ==/UserScript==
 var foo = function () {
 if (Dom.LogManager.prototype.old_addLog) {
@@ -112,10 +112,7 @@ function newLogRefresh() {
 	var t = goko_canvas.style.marginTop;
 	newLog.setAttribute("style", "position:absolute; overflow:auto; left:"+goko_w+"px; width:"+w+"px; margin-top:"+t+"; height:"+goko_h+"px; background-color: white; z-index: -1");
 	var logHtml = vp_div();
-	var players = Object.keys(newLogNames)
-	for(var i=0; i < players.length ;i++){
-		logHtml += deck_div(players[i]);
-	}
+	logHtml += deck_div();
 	newLog.innerHTML = logHtml+'<div id="newlogcontainer" style="overflow:auto;height:'+(goko_h-200)+'px;width:'+(w-10)+'px;padding:195px 5px 5px 5px">'+newLogText+"</div>";
 }
 window.addEventListener('resize', function() {
@@ -584,16 +581,24 @@ function vp_div() {
     ret += '</table></div>';
     return ret;
 }
-var deckCompOn = true;
 
-function deck_div(player) {
-    if (!deckCompOn) return '';
+function deck_div(){
+	var ret = '<div style="position:absolute; left:150px">'
+	var players = Object.keys(newLogNames)
+	for(var i=0; i < players.length ;i++){
+		ret += deck_div_for_player(players[i]);
+	}
+	ret += "</div>";
+}
+
+function deck_div_for_player(player) {
+    if (!options.deckcomp) return '';
 	var playerNum = newLogNames[player]
 	var deck = playerDecks[playerNum]
 	var cards = Object.keys(deck);
 	cards.sort();
 	var left = 150+125*playerNum;
-    var ret = '<div class="deck_div" style="position:absolute;left:'+left.toString()+'px;padding:2px;background-color:gray"><table>';
+    var ret = '<div style="float:left;left:'+left.toString()+'px;padding:2px;background-color:gray"><table>';
 	for(var i =0; i < cards.length; i++){
 		ret += '<tr class="p'+playerNum+'"><td>'+cards[i]+ '</td><td>'+ deck[cards[i]] + '</td></tr>';
 	}
@@ -1107,6 +1112,7 @@ function options_window() {
     h+= '<input name="proranks" type="checkbox">Show pro rankings in the lobby<br>';
     h+= '<input name="sort-rating" type="checkbox">Sort players by rating<br>';
     h+= '<input name="adventurevp" type="checkbox">Victory point tracker in Adventures<br>';
+	h+= '<input name="deckcomp" type="checkbox">Show Player Deck Composition<br>';
 //    h+= '<input name="opt" style="width:95%"><br>';
     h+= '<div style="align:center;text-align:center"><input type="submit" value="Save"></div></form>';
     h+= '</div></div>';
@@ -1118,6 +1124,7 @@ function options_window() {
     $('#optform input[name="proranks"]').prop('checked',options.proranks);
     $('#optform input[name="sort-rating"]').prop('checked',options.sortrating);
     $('#optform input[name="adventurevp"]').prop('checked',options.adventurevp);
+	$('#optform input[name="deckcomp"]').prop('checked',options.deckcomp);
     document.getElementById('optform').onsubmit = function () {
 	options.autokick = $('#optform input[name="autokick"]').prop('checked');
 	options.generator = $('#optform input[name="generator"]').prop('checked');
