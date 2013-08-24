@@ -591,7 +591,7 @@ function deck_div(player) {
 	var playerNum = newLogNames[player]
 	var deck = playerDecks[playerNum]
 	var left = 200+150*playerNum;
-    var ret = '<div style="position:absolute;left:'+left.toString()+' px;padding:2px;background-color:gray"><table>';
+    var ret = '<div class="deck_div" style="position:absolute;left:'+left.toString()+' px;padding:2px;background-color:gray"><table>';
 	
 	for(card in deck){
 		ret += '<tr class="p'+playerNum+'"><td>'+card+ '</td><td>'+ deck[card] + '</td></tr>';
