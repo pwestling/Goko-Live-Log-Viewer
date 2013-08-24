@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     30
+// @version     31
 // ==/UserScript==
 var foo = function () {
 if (Dom.LogManager.prototype.old_addLog) {
@@ -583,16 +583,18 @@ function vp_div() {
 }
 
 function deck_div(){
+	if (!options.deckcomp) return '';
 	var ret = '<div style="position:absolute; left:150px">'
 	var players = Object.keys(newLogNames)
 	for(var i=0; i < players.length ;i++){
 		ret += deck_div_for_player(players[i]);
 	}
 	ret += "</div>";
+	return ret;
 }
 
 function deck_div_for_player(player) {
-    if (!options.deckcomp) return '';
+    
 	var playerNum = newLogNames[player]
 	var deck = playerDecks[playerNum]
 	var cards = Object.keys(deck);
@@ -1086,6 +1088,7 @@ var default_options = {
     proranks: true,
     sortrating: true,
     adventurevp: true,
+	deckcomp: true,
 };
 var options = {};
 function options_save() {
@@ -1131,6 +1134,8 @@ function options_window() {
 	options.proranks = $('#optform input[name="proranks"]').prop('checked');
 	options.sortrating = $('#optform input[name="sort-rating"]').prop('checked'); 
 	options.adventurevp = $('#optform input[name="adventurevp"]').prop('checked'); 
+	options.deckcomp = $('#optform input[name="deckcomp"]').prop('checked'); 
+
 	options_save();
 	$('#usersettings').hide();
 	return false;
