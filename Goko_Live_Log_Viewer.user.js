@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     25
+// @version     26
 // ==/UserScript==
 var foo = function () {
 if (Dom.LogManager.prototype.old_addLog) {
@@ -590,9 +590,11 @@ function deck_div(player) {
     if (!deckCompOn) return '';
 	var playerNum = newLogNames[player]
 	var deck = playerDecks[playerNum]
+	var cards = Object.keys(deck);
+	cards.sort();
 	var left = 150+100*playerNum;
     var ret = '<div class="deck_div" style="position:absolute;left:'+left.toString()+'px;padding:2px;background-color:gray"><table>';
-	for(card in deck){
+	for(card in cards){
 		ret += '<tr class="p'+playerNum+'"><td>'+card+ '</td><td>'+ deck[card] + '</td></tr>';
 	}
     ret += '</table></div>';
