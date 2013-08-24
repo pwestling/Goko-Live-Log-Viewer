@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     23
+// @version     24
 // ==/UserScript==
 var foo = function () {
 if (Dom.LogManager.prototype.old_addLog) {
@@ -112,12 +112,13 @@ function newLogRefresh() {
 	var t = goko_canvas.style.marginTop;
 	newLog.setAttribute("style", "position:absolute; overflow:auto; left:"+goko_w+"px; width:"+w+"px; margin-top:"+t+"; height:"+goko_h+"px; background-color: white; z-index: -1");
 	var logHtml = vp_div();
-	alert(logHtml);
-	alert(JSON.stringify(newLogNames));
-	for(var player in Object.keys(newLogNames)){
-		alert(player);
-		logHtml += deck_div(player);
+	var players = Object.keys(newLogNames)
+	alert(players)
+	for(var i=0; i < players.length ;i++){
+		alert(players[i]);
+		logHtml += deck_div(players[i]);
 	}
+	alert(logHtml);
 	newLog.innerHTML = logHtml+'<div id="newlogcontainer" style="overflow:auto;height:'+(goko_h-200)+'px;width:'+(w-10)+'px;padding:195px 5px 5px 5px">'+newLogText+"</div>";
 }
 window.addEventListener('resize', function() {
