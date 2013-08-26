@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     32
+// @version     33
 // ==/UserScript==
 var foo = function () {
         if (Dom.LogManager.prototype.old_addLog) {
