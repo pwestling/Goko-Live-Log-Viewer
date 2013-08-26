@@ -77,6 +77,7 @@ var foo = function () {
                         }
                         h = opt.text.match(/.*Supply cards:(.*)/)
                         if (h) {
+                            supplyCards = []
                             var cards = h[1].split(",")
                             for (var i = 0; i < cards.length; i++) {
                                 if (supplyIgnore.indexOf(cards[i].trim()) < 0) {
