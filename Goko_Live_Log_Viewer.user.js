@@ -7,7 +7,7 @@
 // @require     http://dom.retrobox.eu/js/1.0.0/set_parser.js
 // @run-at      document-end
 // @grant       none
-// @version     34
+// @version     35
 // ==/UserScript==
 var foo = function () {
         if (Dom.LogManager.prototype.old_addLog) {
@@ -1338,7 +1338,7 @@ border-bottom: 1px solid black;\
                 sel.selval.value = games[gameIndex];
                 $('#gamehistory').hide();
             }
-            for (var i = 0; i < games.length; i++) {
+            for (var i = games.length-1; i >=0; i--) {
                 html += '<tr><td style="border-bottom: 1px solid black">Game ' + i + '</td>' +
                     '<td class="gameHist"><div id="gameHist' + i + '">Kingdom: ' + games[i] + '</div></td></tr>'
             }
